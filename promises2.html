@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>PhonePe Payment System</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+#paymentContainer {
+    text-align: center;
+}
+
+button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.hidden {
+    display: none;
+}
+
+.processing-icon,
+.status-icon {
+    max-width: 100px;
+    margin-bottom: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <div id="paymentContainer">
+        <div id="processingUI" class="hidden">
+            <img src="processing.gif" alt="Processing" class="processing-icon">
+            <p>Processing your payment...</p>
+        </div>
+
+        <div id="successUI" class="hidden">
+            <img src="success.png" alt="Success" class="status-icon">
+            <p>Payment successful!</p>
+        </div>
+
+        <div id="failureUI" class="hidden">
+            <img src="failure.png" alt="Failure" class="status-icon">
+            <p>Payment failed. Please try again.</p>
+        </div>
+
+        <button onclick="initiatePayment()">Make Payment</button>
+    </div>
+
+    <script>
+      function showUI(uiElementId) {
+    const uiElements = ['processingUI', 'successUI', 'failureUI'];
+    uiElements.forEach(elementId => {
+        const element = document.getElementById(elementId);
+        if (elementId === uiElementId) {
+            element.classList.remove('hidden');
+        } else {
+            element.classList.add('hidden');
+        }
+    });
+}
+
+function simulatePayment() {
+    // Simulate an asynchronous payment process using a Promise
+    return new Promise((resolve, reject) => {
+        const isSuccess = Math.random() < 0.8; // 80% chance of success
+
+        setTimeout(() => {
+            if (isSuccess) {
+                resolve();
+            } else {
+                reject();
+            }
+        }, 2000); // Simulating a delay of 2 seconds
+    });
+}
+
+function initiatePayment() {
+    showUI('processingUI');
+
+    simulatePayment()
+        .then(() => {
+            showUI('successUI');
+        })
+        .catch(() => {
+            showUI('failureUI');
+        });
+}
+
+    </script>
+</body>
+</html>
